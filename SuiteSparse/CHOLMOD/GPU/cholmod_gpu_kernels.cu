@@ -20,7 +20,7 @@ extern "C" {
   __global__ void kernelCreateMap ( Int *d_Map, Int *d_Ls, 
 				    Int psi, Int nsrow )
   /*
-    Ls[supernode row] = Matrix Row
+    Ls[supernode row] = Matrix Row 
   */
   {
     int tid = blockIdx.x * blockDim.x + threadIdx.x;

@@ -9,4 +9,5 @@ SET(SuiteSparse_GPURuntime_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/Include" PARENT_
 FIND_PACKAGE(CUDA REQUIRED)
 INCLUDE_DIRECTORIES(${CUDA_INCLUDE_DIRS})
 include_directories("${suitesparseconfig_SOURCE_DIR}")
-ADD_LIBRARY(SuiteSparse_GPURuntime ${LIBHDRS} ${LIBSRCS})
+#ADD_LIBRARY(SuiteSparse_GPURuntime ${LIBHDRS} ${LIBSRCS})
+declare_suitesparse_library(SuiteSparse_GPURuntime "${LIBSRCS}" "${LIBHDRS}")

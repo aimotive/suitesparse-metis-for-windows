@@ -1123,7 +1123,7 @@ int cholmod_free_work
     cholmod_common *Common
 ) ;
 
-int cholmod_l_free_work (cholmod_common *) ;
+//int cholmod_l_free_work (cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_clear_flag:  clear Flag workspace in Common */
