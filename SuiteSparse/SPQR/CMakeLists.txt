@@ -3,8 +3,10 @@ PROJECT(SPQR)
 include_directories("${suitesparseconfig_SOURCE_DIR}")
 include_directories("${SPQR_SOURCE_DIR}/Include")
 include_directories("${CHOLMOD_SOURCE_DIR}/Include")
-include_directories("${GPUQREngine_SOURCE_DIR}/Include")
-include_directories("${SuiteSparse_GPURuntime_SOURCE_DIR}/Include")
+if (WITH_CUDA)
+    include_directories("${GPUQREngine_SOURCE_DIR}/Include")
+    include_directories("${SuiteSparse_GPURuntime_SOURCE_DIR}/Include")
+endif()
 
 FILE(GLOB LIBHDRS "Include/*.h*") # .h & .hpp
 SET(LIBSRCS 
@@ -55,6 +57,10 @@ SET(LIBSRCS
 	
 declare_suitesparse_library(spqr "${LIBSRCS}" "${LIBHDRS}"
 	TARGET_PRIVATE_LINK	${SuiteSparse_LINKER_LAPACK_BLAS_LIBS}
-	TARGET_PUBLIC_LINK 	camd ccolamd cholmod GPUQREngine SuiteSparse_GPURuntime ${SuiteSparse_LINKER_METIS_LIBS}
+	TARGET_PUBLIC_LINK 	camd ccolamd cholmod ${SuiteSparse_LINKER_METIS_LIBS}
 )
+
+if (WITH_CUDA)
+    target_link_libraries(spqr PUBLIC GPUQREngine SuiteSparse_GPURuntime)
+endif()
 
