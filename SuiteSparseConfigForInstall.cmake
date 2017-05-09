@@ -27,6 +27,7 @@ set(USE_SuiteSparse ${SuiteSparse_IMPORT_PREFIX}/UseSuiteSparse${SuiteSparse_LIB
 
 if(EXISTS ${USE_SuiteSparse})
 	## do nothing, it's OK
+    include(${USE_SuiteSparse})
 else()
 	message(SEND_ERROR "correct version of SuiteSparse not found :\nUSE_SuiteSparse=${USE_SuiteSparse}")
 	set(SuiteSparse_FOUND OFF)
