@@ -61,6 +61,6 @@ declare_suitesparse_library(spqr "${LIBSRCS}" "${LIBHDRS}"
 )
 
 if (WITH_CUDA)
-    target_link_libraries(spqr PUBLIC GPUQREngine SuiteSparse_GPURuntime)
+    target_link_libraries(spqr GPUQREngine SuiteSparse_GPURuntime)
 endif()
 
