@@ -42,11 +42,13 @@ if(WIN32 AND SuiteSparse_USE_LAPACK_BLAS)
 	
 	if(SuiteSparse_LAPACK_BLAS_LIBRARIES AND SuiteSparse_LAPACK_BLAS_DLL)
 		add_library(blas SHARED IMPORTED)
-		set_property(TARGET blas PROPERTY IMPORTED_LOCATION "${SuiteSparse_LAPACK_BLAS_LIB_DIR}/libblas.dll")
+		set_property(TARGET blas PROPERTY IMPORTED_LOCATION_RELEASE "${SuiteSparse_LAPACK_BLAS_LIB_DIR}/libblas.dll")
+		set_property(TARGET blas PROPERTY IMPORTED_LOCATION_DEBUG   "${SuiteSparse_LAPACK_BLAS_LIB_DIR}/libblas.dll")
 		set_property(TARGET blas PROPERTY IMPORTED_IMPLIB 	"${SuiteSparse_LAPACK_BLAS_LIB_DIR}/libblas.lib")
 		
 		add_library(lapack SHARED IMPORTED)
-		set_property(TARGET lapack PROPERTY IMPORTED_LOCATION 	"${SuiteSparse_LAPACK_BLAS_LIB_DIR}/liblapack.dll")
+		set_property(TARGET lapack PROPERTY IMPORTED_LOCATION_RELEASE "${SuiteSparse_LAPACK_BLAS_LIB_DIR}/liblapack.dll")
+		set_property(TARGET lapack PROPERTY IMPORTED_LOCATION_DEBUG   "${SuiteSparse_LAPACK_BLAS_LIB_DIR}/liblapack.dll")
 		set_property(TARGET lapack PROPERTY IMPORTED_IMPLIB 	"${SuiteSparse_LAPACK_BLAS_LIB_DIR}/liblapack.lib")
 	
 		list(APPEND SuiteSparse_LIBRARIES blas lapack)
