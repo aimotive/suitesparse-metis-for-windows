@@ -29,7 +29,7 @@ get_filename_component(SuiteSparse_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 ## libs
 set(SuiteSparse_LIBRARIES 	"")
-set(SuiteSparse_LIB_DIR 	"${SuiteSparse_DIR}/lib@LIB_POSTFIX@")
+set(SuiteSparse_LIB_DIR 	"${SuiteSparse_DIR}/lib")
 
 if (@WITH_CUDA@)
     find_package(CUDA REQUIRED)

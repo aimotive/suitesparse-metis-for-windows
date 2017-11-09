@@ -76,20 +76,8 @@ if(SuiteSparse_VERBOSE)
 	message(STATUS "Start to FindSuiteSparse.cmake :")
 endif()
 
-
-## set the LIB POSTFIX to find in a right directory according to what kind of compiler we use (32/64bits)
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)  # Size in bytes!
-	set(SuiteSparse_SEARCH_LIB_POSTFIX "64" CACHE STRING "suffix for 32/64 dir placement")
-else()  # Size in bytes!
-	set(SuiteSparse_SEARCH_LIB_POSTFIX "" CACHE STRING "suffix for 32/64 dir placement")
-endif()
-if(SuiteSparse_SEARCH_LIB_POSTFIX)
-	mark_as_advanced(SuiteSparse_SEARCH_LIB_POSTFIX)
-	if(SuiteSparse_VERBOSE)
-		message(STATUS "   find_library will search inside lib${SuiteSparse_SEARCH_LIB_POSTFIX} directory (can be changed with SuiteSparse_SEARCH_LIB_POSTFIX)")
-	endif()
-endif()
-
+set(SuiteSparse_SEARCH_LIB_POSTFIX "")
+mark_as_advanced(SuiteSparse_SEARCH_LIB_POSTFIX)
 
 ## This utility macro is used to find all suitesparse projects by giving its name
 ## Since the name structure is the same for lib name and include dir name,

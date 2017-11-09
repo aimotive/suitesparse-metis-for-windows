@@ -26,13 +26,6 @@ IF(NOT WIN32)
 	SET(GKLIB_PATH "${${PROJECT_NAME}_SOURCE_DIR}/metis/GKlib" CACHE INTERNAL "Path to GKlib (for METIS)" FORCE)
 ENDIF()
 
-## get POSTFIX for lib install dir
-if(CMAKE_SIZEOF_VOID_P MATCHES "8")
-  set(LIB_POSTFIX "64" CACHE STRING "suffix for 32/64 inst dir placement")
-else()
-  set(LIB_POSTFIX "" CACHE STRING "suffix for 32/64 inst dir placement")
-endif()
-mark_as_advanced(LIB_POSTFIX)
 
 # We want libraries to be named "libXXX" and "libXXXd" in all compilers:
 # ------------------------------------------------------------------------
@@ -67,8 +60,8 @@ if(BUILD_METIS)
 				install(TARGETS metis ## this line is also the string pattern to check if the modification had already done
 						EXPORT 	SuiteSparse
 						RUNTIME DESTINATION bin
-						LIBRARY DESTINATION lib${LIB_POSTFIX}
-						ARCHIVE DESTINATION lib${LIB_POSTFIX}
+						LIBRARY DESTINATION lib
+						ARCHIVE DESTINATION lib
 						PUBLIC_HEADER DESTINATION include
 				)
 			"
@@ -108,8 +101,8 @@ macro(install_suitesparse_project targetName headersList)
 	install(TARGETS	${targetName}
 			EXPORT 	SuiteSparse
 			RUNTIME DESTINATION bin
-			LIBRARY DESTINATION lib${LIB_POSTFIX}
-			ARCHIVE DESTINATION lib${LIB_POSTFIX}
+			LIBRARY DESTINATION lib
+			ARCHIVE DESTINATION lib
 			PUBLIC_HEADER DESTINATION include/suitesparse
 	)
 endmacro()
@@ -214,11 +207,8 @@ ELSE()
 		file(GLOB lapack_blas_windows_libs 	"${CMAKE_SOURCE_DIR}/lapack_windows/${PATH_WORD_SIZE}/*.lib")
 		file(GLOB lapack_blas_windows_dll 	"${CMAKE_SOURCE_DIR}/lapack_windows/${PATH_WORD_SIZE}/*.dll")
 		if(lapack_blas_windows_dll AND lapack_blas_windows_libs)
-			set(SuiteSparse_LAPACK_BLAS_LIB_DIR "lib${LIB_POSTFIX}/lapack_blas_windows") ## used in UseSuiteSparse*.cmake
-			install(FILES 		${lapack_blas_windows_libs} 
-								${lapack_blas_windows_dll}
-					DESTINATION ${SuiteSparse_LAPACK_BLAS_LIB_DIR}
-			)
+			install(FILES ${lapack_blas_windows_libs} DESTINATION lib)
+			install(FILES ${lapack_blas_windows_dll} DESTINATION bin)
 		endif()
 	ENDIF()
 ENDIF()
@@ -239,11 +229,12 @@ install(FILES 		SuiteSparseConfigForInstall.cmake
 configure_file(UseSuiteSparseForInstall.cmake.in UseSuiteSparseForInstall.cmake @ONLY)
 install(FILES 		"${CMAKE_BINARY_DIR}/UseSuiteSparseForInstall.cmake"
 		DESTINATION	.
-		RENAME 		UseSuiteSparse${LIB_POSTFIX}.cmake
+		RENAME 		UseSuiteSparse.cmake
 )
 
 ## do the EXPORT for allowing other project to easily use suitesparse with cmake
 install(EXPORT  	SuiteSparse
         DESTINATION cmake
-        FILE        SuiteSparse-config${LIB_POSTFIX}.cmake
+        FILE        SuiteSparse-config.cmake
+		RENAME 		UseSuiteSparse.cmake
 )
